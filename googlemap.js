@@ -1,3 +1,11 @@
+var locations = [
+	{lat: -31.563910, lng: 147.154312},
+	{lat: -42.734358, lng: 147.439506},
+	{lat: -42.734358, lng: 147.501315},
+	{lat: -42.735258, lng: 147.438000},
+	{lat: -43.999792, lng: 170.463352}
+]
+
 function initMap() {
 	var styles = [{"featureType":"all","elementType":"all","stylers":[{"saturation":-100},{"gamma":0.5}]}];
 
@@ -34,16 +42,29 @@ function initMap() {
 		map.setCenter(center);
 	});
 
-	/*var kmlLayer = new google.maps.KmlLayer({
-      url: 'http://www.google.com/maps/d/kml?forcekml=1&mid=12a-8aZ3M0GNO6hMRJwTVa8GuYW8LI9ii',
-      preserveViewport: true,
-      map: map
-    });*/
-
-    var kmlLayer = new google.maps.KmlLayer({
-      url: 'http://project.oniondesign.com.tw/ccc/scrollsofanortherncity/cta.kml?3',
-      preserveViewport: true,
-      map: map
-    });
+    setMarkers(map,locations);
 }
 
+function setMarkers(map,locations){
+	var marker, i
+
+	for (i = 0; i < locations.length; i++){
+		var lat = locations[i]['lat'];
+		var long = locations[i]['lng'];
+
+		latlngset = new google.maps.LatLng(lat, long);
+
+		var marker = new google.maps.Marker({  
+          map: map, position: latlngset  
+        });
+
+        map.setCenter(marker.getPosition());
+
+        var infowindow = new google.maps.InfoWindow();
+        google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+	        return function() {
+	           
+	        };
+	    })(marker,content,infowindow)); 
+	}
+}
